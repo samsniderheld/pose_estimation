@@ -24,7 +24,6 @@ def create_pose_detector():
 
     #skip connection
     skip_1 = Add()([d1,x1])
-    print(skip_1.shape)
 
     # block 3
     x2 = Dense(1024)(skip_1)
@@ -38,11 +37,9 @@ def create_pose_detector():
 
     #skip connection
     skip_2 = Add()([skip_1,x2])
-    print(skip_2.shape)
 
     #output 
     output = Dense(52*6)(skip_2)
-    print(output.shape)
 
     output = Reshape((52,6))(output)
 
