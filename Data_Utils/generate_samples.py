@@ -21,19 +21,19 @@ def get_random_sample(args):
     output_paths = sorted(glob.glob(output_data_path),key=natural_keys)
 
     X = np.empty((1, 52,2))
-    Y = np.empty((1, 52,6))
+    Y = np.empty((1, 52,8))
 
     with open(input_paths[rand_idx]) as file:
                 csv_reader = csv.reader(file, delimiter=',')
                 for j,row in enumerate(csv_reader):
                     for k, val in enumerate(row[1:3]):
-                      X[0,j,k] = float(val)/360
+                      X[0,j,k] = float(val)/1024
 
     with open(output_paths[rand_idx]) as file:
                 csv_reader = csv.reader(file, delimiter=',')
                 for j,row in enumerate(csv_reader):
-                    for k, val in enumerate(row[1:7]):
-                      Y[0,j,k] = float(val)/360
+                    for k, val in enumerate(row[1:9]):
+                      Y[0,j,k] = float(val)/1024
 
 
 
