@@ -53,13 +53,13 @@ class DataGenerator(tf.keras.utils.Sequence):
                 csv_reader = csv.reader(file, delimiter=',')
                 for j,row in enumerate(csv_reader):
                     for k, val in enumerate(row[1:3]):
-                      X[i,j,k] = float(val)/1024
+                      X[i,j,k] = float(val)/360
 
             with open(batch_file[1]) as file:
                 csv_reader = csv.reader(file, delimiter=',')
                 for j,row in enumerate(csv_reader):
                     for k, val in enumerate(row[1:7]):
-                      Y[i,j,k] = float(val)/1024
+                      Y[i,j,k] = float(val)/360
                     # for k, val in enumerate(row[4:7]):
                     #   Y[i,j,k] = float(val)/360
             

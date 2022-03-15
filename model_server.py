@@ -9,23 +9,21 @@ import cv2
 from scipy.spatial import distance
 import scipy.misc
 from keras.preprocessing import image
-from Model.bone_variational_auto_encoder import create_variational_bone_auto_encoder
+from Model.pose_detection_model import create_pose_detector
 from Model.bone_auto_encoder import create_bone_auto_encoder
 
-# encoder_model = tf.keras.models.load_model('Saved_Models/0300_encoder_model.h5')
-# bone_decoder_model = tf.keras.models.load_model('Saved_Models/0300_bone_decoder_model.h5')
+
 
 img_dim = 128
 
-encoder, bone_decoder, auto_encoder = create_variational_bone_auto_encoder(
-        dims=img_dim, latent_dim = 128)
-
-
-
-# encoder, bone_decoder, auto_encoder = create_bone_auto_encoder(
-#         dims=img_dim , latent_dim = 128)
+encoder, bone_decoder, auto_encoder = create_bone_auto_encoder(
+        dims=img_dim , latent_dim = 128)
 
 auto_encoder.load_weights('Saved_Models/bone_auto_encoder_model.h5')
+
+pose_detector = create_pose_detector()
+
+pose_detector.load_weights('Saved_Models/pose_detector_model.h5')
 
 
 app = Flask(__name__)
@@ -53,12 +51,14 @@ def suggest():
 
     sample = np.expand_dims(np_img, axis=0)
 
-    empty_CSV = np.empty((1,52,3))
+    empty_CSV = np.empty((1,52,2))
    
-    # prediction = bone_decoder_model(encoder_model(sample))
-    prediction = auto_encoder([sample,empty_CSV,empty_CSV])
+    prediction_0 = auto_encoder([sample,empty_CSV])
 
-    response = {"bones": prediction[0].numpy().flatten().tolist()}
+
+    prediction_1 = pose_detector(prediction_0[0])
+
+    response = {"bones": prediction_1[0].numpy().flatten().tolist()}
 
     return json.dumps(response)
 
