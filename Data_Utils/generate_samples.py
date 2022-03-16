@@ -32,8 +32,8 @@ def get_random_sample(args):
     with open(output_paths[rand_idx]) as file:
                 csv_reader = csv.reader(file, delimiter=',')
                 for j,row in enumerate(csv_reader):
-                    for k, val in enumerate(row[1:9]):
-                      Y[0,j,k] = float(val)/1024
+                    for k, val in enumerate(row[6:9]):
+                      Y[0,j,k] = float(val)/360
 
 
 

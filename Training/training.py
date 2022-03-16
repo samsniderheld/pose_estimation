@@ -31,7 +31,7 @@ def train(args):
             shuffle=True,
         )
 
-        loss = round(history.history['loss'][0],4)
+        loss = round(history.history['loss'][0],8)
 
         if(args.save_best_only):
 

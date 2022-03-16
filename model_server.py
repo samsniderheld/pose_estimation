@@ -35,7 +35,7 @@ def suggest():
         return jsonify(status_code='400', msg='Bad Request'), 400
 
 
-    bone_values = data[:-11].split(",")
+    bone_values = data[:-2].split(",")
 
     print(len(bone_values))
 
