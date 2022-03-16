@@ -44,7 +44,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         batch_files = self.all_files[idx*self.batch_size:idx*self.batch_size+self.batch_size]
         
         X = np.empty((self.batch_size,17,2))
-        Y = np.empty((self.batch_size,17,8))
+        Y = np.empty((self.batch_size,17,3))
 
         # read image
         for i, batch_file in enumerate(batch_files):
@@ -58,8 +58,8 @@ class DataGenerator(tf.keras.utils.Sequence):
             with open(batch_file[1]) as file:
                 csv_reader = csv.reader(file, delimiter=',')
                 for j,row in enumerate(csv_reader):
-                    for k, val in enumerate(row[6:9]):
-                      Y[i,j,k] = float(val)/360
+                    for k, val in enumerate(row[3:6]):
+                      Y[i,j,k] = float(val)/1024
                     # for k, val in enumerate(row[4:7]):
                     #   Y[i,j,k] = float(val)/360
             
