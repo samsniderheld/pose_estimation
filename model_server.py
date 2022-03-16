@@ -16,10 +16,10 @@ from Model.bone_auto_encoder import create_bone_auto_encoder
 
 img_dim = 128
 
-encoder, bone_decoder, auto_encoder = create_bone_auto_encoder(
-        dims=img_dim , latent_dim = 128)
+# encoder, bone_decoder, auto_encoder = create_bone_auto_encoder(
+#         dims=img_dim , latent_dim = 128)
 
-auto_encoder.load_weights('Saved_Models/bone_auto_encoder_model.h5')
+# auto_encoder.load_weights('Saved_Models/bone_auto_encoder_model.h5')
 
 pose_detector = create_pose_detector()
 
@@ -35,30 +35,17 @@ def suggest():
         return jsonify(status_code='400', msg='Bad Request'), 400
 
 
-    b64_decoded_img = base64.b64decode(data)
+    bone_values = data[:-11].split(",")
 
-    byte_img = io.BytesIO(b64_decoded_img)
+    print(len(bone_values))
 
-    pil_img= Image.open(byte_img)
+    np_bone_values = np.array(bone_values).astype(np.float)
 
-    cv2.imwrite('test.jpg',np.array(pil_img))
+    pose = np_bone_values.reshape((1,17,2))
 
-    pil_img = pil_img.resize((img_dim,img_dim))
+    prediction = pose_detector(pose)
 
-    np_img = image.img_to_array(pil_img)
-    
-    np_img = np_img/255.
-
-    sample = np.expand_dims(np_img, axis=0)
-
-    empty_CSV = np.empty((1,52,2))
-   
-    prediction_0 = auto_encoder([sample,empty_CSV])
-
-
-    prediction_1 = pose_detector(prediction_0[0])
-
-    response = {"bones": prediction_1[0].numpy().flatten().tolist()}
+    response = {"bones": prediction[0].numpy().flatten().tolist()}
 
     return json.dumps(response)
 

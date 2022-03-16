@@ -6,7 +6,7 @@ from tensorflow.keras.losses import MeanSquaredError
 def create_pose_detector():
     #define model
 
-    model_input = Input(shape=(52,2))
+    model_input = Input(shape=(17,2))
 
     # first layer
     flat = Flatten()(model_input)
@@ -39,9 +39,9 @@ def create_pose_detector():
     skip_2 = Add()([skip_1,x2])
 
     #output 
-    output = Dense(52*8)(skip_2)
+    output = Dense(17*8)(skip_2)
 
-    output = Reshape((52,8))(output)
+    output = Reshape((17,8))(output)
 
 
     # instantiate the pose detector model

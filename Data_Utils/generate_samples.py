@@ -20,8 +20,8 @@ def get_random_sample(args):
 
     output_paths = sorted(glob.glob(output_data_path),key=natural_keys)
 
-    X = np.empty((1, 52,2))
-    Y = np.empty((1, 52,8))
+    X = np.empty((1, 17,2))
+    Y = np.empty((1, 17,8))
 
     with open(input_paths[rand_idx]) as file:
                 csv_reader = csv.reader(file, delimiter=',')

@@ -43,8 +43,8 @@ class DataGenerator(tf.keras.utils.Sequence):
 
         batch_files = self.all_files[idx*self.batch_size:idx*self.batch_size+self.batch_size]
         
-        X = np.empty((self.batch_size,52,2))
-        Y = np.empty((self.batch_size,52,8))
+        X = np.empty((self.batch_size,17,2))
+        Y = np.empty((self.batch_size,17,8))
 
         # read image
         for i, batch_file in enumerate(batch_files):
