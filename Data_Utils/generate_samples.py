@@ -20,8 +20,8 @@ def get_random_sample(args):
 
     output_paths = sorted(glob.glob(output_data_path),key=natural_keys)
 
-    X = np.empty((1, 53,2))
-    Y = np.empty((1, 53,3))
+    X = np.empty((1, 52,2))
+    Y = np.empty((1, 52,6))
 
     X[0] = np.load(input_paths[rand_idx])
     Y[0] = np.load(output_paths[rand_idx])
