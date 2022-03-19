@@ -11,8 +11,10 @@ class DataGenerator(tf.keras.utils.Sequence):
 #     'Generates data for tf.keras'
     def __init__(self, args, shuffle=True,):
         self.shuffle = shuffle
-        self.input_dir = os.path.join(args.base_data_dir,args.input_data_dir + "*")
-        self.output_dir = os.path.join(args.base_data_dir,args.output_data_dir + "*")
+        # self.input_dir = os.path.join(args.base_data_dir,args.input_data_dir + "*")
+        # self.output_dir = os.path.join(args.base_data_dir,args.output_data_dir + "*")
+        self.input_dir = "Normalized_Data/x_data/*"
+        self.output_dir = "Normalized_Data/y_data/*"
         self.batch_size = args.batch_size
         self.input_files  = sorted(glob.glob(self.input_dir))
         self.output_dir  = sorted(glob.glob(self.output_dir))
@@ -43,24 +45,26 @@ class DataGenerator(tf.keras.utils.Sequence):
 
         batch_files = self.all_files[idx*self.batch_size:idx*self.batch_size+self.batch_size]
         
-        X = np.empty((self.batch_size,17,2))
-        Y = np.empty((self.batch_size,17,3))
+        X = np.empty((self.batch_size,52,2))
+        Y = np.empty((self.batch_size,52,6))
 
         # read image
         for i, batch_file in enumerate(batch_files):
 
-            with open(batch_file[0]) as file:
-                csv_reader = csv.reader(file, delimiter=',')
-                for j,row in enumerate(csv_reader):
-                    for k, val in enumerate(row[1:3]):
-                      X[i,j,k] = float(val)/1024
+            X[i] = np.load(batch_file[0])
+            Y[i] = np.load(batch_file[1])
+            # with open(batch_file[0]) as file:
+            #     csv_reader = csv.reader(file, delimiter=',')
+            #     for j,row in enumerate(csv_reader):
+            #         for k, val in enumerate(row[1:3]):
+            #           X[i,j,k] = float(val)/1024
 
-            with open(batch_file[1]) as file:
-                csv_reader = csv.reader(file, delimiter=',')
-                for j,row in enumerate(csv_reader):
-                    for k, val in enumerate(row[3:6]):
-                      Y[i,j,k] = float(val)/1024
-                    # for k, val in enumerate(row[4:7]):
-                    #   Y[i,j,k] = float(val)/360
+            # with open(batch_file[1]) as file:
+            #     csv_reader = csv.reader(file, delimiter=',')
+            #     for j,row in enumerate(csv_reader):
+            #         for k, val in enumerate(row[3:6]):
+            #           Y[i,j,k] = float(val)/1024
+            #         # for k, val in enumerate(row[4:7]):
+            #         #   Y[i,j,k] = float(val)/360
             
         return X,Y

@@ -2,6 +2,7 @@ import argparse
 import os
 import shutil
 from Training.training import train
+from Data_Utils.normalize import normalize_data
 from datetime import datetime
 
 
@@ -45,6 +46,9 @@ def main():
         os.makedirs(os.path.join(args.base_results_dir,"CSV"))
         os.makedirs(os.path.join(args.base_results_dir,"History"))
         os.makedirs(os.path.join(args.base_results_dir,"Saved_Models"))
+
+
+    normalize_data(args)
 
     train(args)
         
