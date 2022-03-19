@@ -55,11 +55,11 @@ def normalize_data(args):
     print(np_all_data_x.shape)
     print(np_all_data_y.shape)
 
-    data_x_mean = np.mean(np_all_data_x,dtype=np.float64,axis=0)
-    data_x_std = np.std(np_all_data_x, dtype=np.float64,axis=0)
+    data_x_mean = np.mean(np_all_data_x,dtype=np.float64)
+    data_x_std = np.std(np_all_data_x, dtype=np.float64)
 
-    data_y_mean = np.mean(np_all_data_y,dtype=np.float64,axis=0)
-    data_y_std = np.std(np_all_data_y,dtype=np.float64,axis=0)
+    data_y_mean = np.mean(np_all_data_y,dtype=np.float64)
+    data_y_std = np.std(np_all_data_y,dtype=np.float64)
 
     # norm_factor_x = np.linalg.norm(np_all_data_x)
     # norm_factor_y = np.linalg.norm(np_all_data_y)
@@ -70,14 +70,17 @@ def normalize_data(args):
     print("normalizing and saving data")
     for i in tqdm(range(0,np_all_data_x.shape[0])):
 
-        normalized_x_sample = (np_all_data_x[i]-data_x_mean)/data_x_std
-        normalized_y_sample = (np_all_data_y[i]-data_y_mean)/data_y_std
+        normalized_x_sample = np.divide((np_all_data_x[i]-data_x_mean),data_x_std)
+        normalized_y_sample = np.divide((np_all_data_y[i]-data_y_mean),data_y_std)
         
         # normalized_x_sample = all_data_x[i]/norm_factor_x
         # normalized_y_sample = all_data_y[i]/norm_factor_y
 
         np.save(os.path.join(output_path_x,f"{i:04d}_x_data"), normalized_x_sample)
         np.save(os.path.join(output_path_y,f"{i:04d}_y_data"), normalized_y_sample)
+
+    np.savetxt("x.csv", normalized_x_sample, delimiter=",")
+    np.savetxt("y.csv", normalized_y_sample, delimiter=",")
 
 
     stats_path = os.path.join(args.base_results_dir,"stats.txt")
