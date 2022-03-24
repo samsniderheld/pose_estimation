@@ -33,8 +33,8 @@ def normalize_data(args):
     print("loading data")
     for i, path in tqdm(enumerate(input_paths)):
 
-        X = np.empty((52,2),dtype=np.float64)
-        Y = np.empty((52,6),dtype=np.float64)
+        X = np.empty((5,2),dtype=np.float64)
+        Y = np.empty((5,3),dtype=np.float64)
 
         with open(path) as file:
             csv_reader = csv.reader(file, delimiter=',')
