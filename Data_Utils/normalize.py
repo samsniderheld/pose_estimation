@@ -33,7 +33,7 @@ def normalize_data(args):
     print("loading data")
     for i, path in tqdm(enumerate(input_paths)):
 
-        X = np.empty((5,2),dtype=np.float64)
+        X = np.empty((4,2),dtype=np.float64)
         Y = np.empty((52,3),dtype=np.float64)
 
         with open(path) as file:
@@ -49,7 +49,7 @@ def normalize_data(args):
 
 
     print("calculating mean and std")
-    # np_all_data_x = np.array(all_data_x,dtype=np.float64)
+    np_all_data_x = np.array(all_data_x,dtype=np.float64)
     np_all_data_y = np.array(all_data_y,dtype=np.float64)
 
     # print(np_all_data_x.shape)
