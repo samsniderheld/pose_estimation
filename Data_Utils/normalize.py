@@ -34,14 +34,14 @@ def normalize_data(args):
     for i, path in tqdm(enumerate(input_paths)):
 
         X = np.empty((5,2),dtype=np.float64)
-        Y = np.empty((5,3),dtype=np.float64)
+        Y = np.empty((52,3),dtype=np.float64)
 
         with open(path) as file:
             csv_reader = csv.reader(file, delimiter=',')
             for j,row in enumerate(csv_reader):
                 for k, val_x in enumerate(row[1:3]):
                   X[j,k] = float(val_x)
-                for l, val_y in enumerate(row[1:7]):
+                for l, val_y in enumerate(row[1:4]):
                   Y[j,l] = float(val_y)
 
         all_data_x.append(X)
@@ -49,14 +49,14 @@ def normalize_data(args):
 
 
     print("calculating mean and std")
-    np_all_data_x = np.array(all_data_x,dtype=np.float64)
+    # np_all_data_x = np.array(all_data_x,dtype=np.float64)
     np_all_data_y = np.array(all_data_y,dtype=np.float64)
 
-    print(np_all_data_x.shape)
+    # print(np_all_data_x.shape)
     print(np_all_data_y.shape)
 
-    data_x_mean = np.mean(np_all_data_x,dtype=np.float64)
-    data_x_std = np.std(np_all_data_x, dtype=np.float64)
+    # data_x_mean = np.mean(np_all_data_x,dtype=np.float64)
+    # data_x_std = np.std(np_all_data_x, dtype=np.float64)
 
     data_y_mean = np.mean(np_all_data_y,dtype=np.float64)
     data_y_std = np.std(np_all_data_y,dtype=np.float64)
@@ -70,7 +70,8 @@ def normalize_data(args):
     print("normalizing and saving data")
     for i in tqdm(range(0,np_all_data_x.shape[0])):
 
-        normalized_x_sample = np.divide((np_all_data_x[i]-data_x_mean),data_x_std)
+        # normalized_x_sample = np.divide((np_all_data_x[i]-data_x_mean),data_x_std)
+        normalized_x_sample = np_all_data_x[i]/1024
         normalized_y_sample = np.divide((np_all_data_y[i]-data_y_mean),data_y_std)
         
         # normalized_x_sample = all_data_x[i]/norm_factor_x
@@ -86,8 +87,8 @@ def normalize_data(args):
     stats_path = os.path.join(args.base_results_dir,"stats.txt")
 
     with open(stats_path, 'w') as f:
-        f.write(f"x mean = {data_x_mean}\n")
-        f.write(f"x std = {data_x_std}\n")
+        # f.write(f"x mean = {data_x_mean}\n")
+        # f.write(f"x std = {data_x_std}\n")
         f.write(f"y mean = {data_y_mean}\n")
         f.write(f"y std = {data_y_std}\n")
         # f.write(f"norm factor x = {norm_factor_x}\n")
