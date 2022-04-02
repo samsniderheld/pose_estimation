@@ -21,6 +21,11 @@ img_dim = 128
 
 # auto_encoder.load_weights('Saved_Models/bone_auto_encoder_model.h5')
 
+f = open ("normalization_stats.json")
+stats = json.load(f)
+stats = stats["stats"][0]
+
+
 pose_detector = create_pose_detector()
 
 pose_detector.load_weights('Saved_Models/pose_detector_model.h5')
@@ -30,7 +35,7 @@ app = Flask(__name__)
 @app.route('/suggest', methods=['POST'])
 def suggest():
     try:
-        data = request.form['img']
+        data = request.form['points']
     except Exception:
         return jsonify(status_code='400', msg='Bad Request'), 400
 
@@ -41,11 +46,15 @@ def suggest():
 
     np_bone_values = np.array(bone_values).astype(np.float)
 
-    pose = np_bone_values.reshape((1,17,2))
+    pose = np_bone_values.reshape((1,4,2))
+
+    pose = pose/1024
 
     prediction = pose_detector(pose)
 
-    response = {"bones": prediction[0].numpy().flatten().tolist()}
+    prediction = np.multiply((prediction + stats['y_mean']),stats['y_std'])
+
+    response = {"bones": prediction[0].flatten().tolist()}
 
     return json.dumps(response)
 

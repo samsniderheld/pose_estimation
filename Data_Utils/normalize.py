@@ -24,8 +24,10 @@ def normalize_data(args):
 
 
     input_data_path = os.path.join(args.base_data_dir,args.input_data_dir + "*")
-
     input_paths = sorted(glob.glob(input_data_path), key=natural_keys)
+
+    output_data_path = os.path.join(args.base_data_dir,args.output_data_dir + "*")
+    output_paths = sorted(glob.glob(output_data_path), key=natural_keys)
 
     all_data_x = []
     all_data_y = []
@@ -34,17 +36,25 @@ def normalize_data(args):
     for i, path in tqdm(enumerate(input_paths)):
 
         X = np.empty((4,2),dtype=np.float64)
-        Y = np.empty((52,3),dtype=np.float64)
 
         with open(path) as file:
             csv_reader = csv.reader(file, delimiter=',')
             for j,row in enumerate(csv_reader):
                 for k, val_x in enumerate(row[1:3]):
                   X[j,k] = float(val_x)
-                for l, val_y in enumerate(row[1:4]):
-                  Y[j,l] = float(val_y)
 
         all_data_x.append(X)
+
+    for i, path in tqdm(enumerate(output_paths)):
+
+        Y = np.empty((52,3),dtype=np.float64)
+
+        with open(path) as file:
+            csv_reader = csv.reader(file, delimiter=',')
+            for j,row in enumerate(csv_reader):
+                for l, val_y in enumerate(row[1:]):
+                  Y[j,l] = float(val_y)
+
         all_data_y.append(Y)
 
 
@@ -52,7 +62,7 @@ def normalize_data(args):
     np_all_data_x = np.array(all_data_x,dtype=np.float64)
     np_all_data_y = np.array(all_data_y,dtype=np.float64)
 
-    # print(np_all_data_x.shape)
+    print(np_all_data_x.shape)
     print(np_all_data_y.shape)
 
     # data_x_mean = np.mean(np_all_data_x,dtype=np.float64)
