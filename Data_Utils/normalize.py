@@ -47,7 +47,7 @@ def normalize_data(args):
 
     for i, path in tqdm(enumerate(output_paths)):
 
-        Y = np.empty((52,3),dtype=np.float64)
+        Y = np.empty((52,6),dtype=np.float64)
 
         with open(path) as file:
             csv_reader = csv.reader(file, delimiter=',')
@@ -82,6 +82,7 @@ def normalize_data(args):
 
         # normalized_x_sample = np.divide((np_all_data_x[i]-data_x_mean),data_x_std)
         normalized_x_sample = np_all_data_x[i]/1024
+        normalized_y_sample = np_all_data_y[i]/360
         normalized_y_sample = np.divide((np_all_data_y[i]-data_y_mean),data_y_std)
         
         # normalized_x_sample = all_data_x[i]/norm_factor_x
@@ -94,15 +95,15 @@ def normalize_data(args):
     np.savetxt("y.csv", normalized_y_sample, delimiter=",")
 
 
-    stats_path = os.path.join(args.base_results_dir,"stats.txt")
+    # stats_path = os.path.join(args.base_results_dir,"stats.txt")
 
-    with open(stats_path, 'w') as f:
-        # f.write(f"x mean = {data_x_mean}\n")
-        # f.write(f"x std = {data_x_std}\n")
-        f.write(f"y mean = {data_y_mean}\n")
-        f.write(f"y std = {data_y_std}\n")
-        # f.write(f"norm factor x = {norm_factor_x}\n")
-        # f.write(f"norm factor y = {norm_factor_y}\n")
+    # with open(stats_path, 'w') as f:
+    #     # f.write(f"x mean = {data_x_mean}\n")
+    #     # f.write(f"x std = {data_x_std}\n")
+    #     f.write(f"y mean = {data_y_mean}\n")
+    #     f.write(f"y std = {data_y_std}\n")
+    #     # f.write(f"norm factor x = {norm_factor_x}\n")
+    #     # f.write(f"norm factor y = {norm_factor_y}\n")
 
 
 

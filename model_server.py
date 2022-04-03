@@ -14,7 +14,7 @@ from Model.bone_auto_encoder import create_bone_auto_encoder
 
 
 
-img_dim = 128
+# img_dim = 128
 
 # encoder, bone_decoder, auto_encoder = create_bone_auto_encoder(
 #         dims=img_dim , latent_dim = 128)
@@ -52,7 +52,7 @@ def suggest():
 
     prediction = pose_detector(pose)
 
-    prediction = np.multiply((prediction + stats['y_mean']),stats['y_std'])
+    # prediction = np.multiply((prediction + stats['y_mean']),stats['y_std'])
 
     response = {"bones": prediction[0].flatten().tolist()}
 
