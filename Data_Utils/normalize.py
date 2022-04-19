@@ -52,7 +52,7 @@ def normalize_data(args):
         with open(path) as file:
             csv_reader = csv.reader(file, delimiter=',')
             for j,row in enumerate(csv_reader):
-                for l, val_y in enumerate(row[1:]):
+                for l, val_y in enumerate(row[1:-1]):
                   Y[j,l] = float(val_y)
 
         all_data_y.append(Y)
@@ -83,7 +83,7 @@ def normalize_data(args):
         # normalized_x_sample = np.divide((np_all_data_x[i]-data_x_mean),data_x_std)
         normalized_x_sample = np_all_data_x[i]/1024
         normalized_y_sample = np_all_data_y[i]/360
-        normalized_y_sample = np.divide((np_all_data_y[i]-data_y_mean),data_y_std)
+        # normalized_y_sample = np.divide((np_all_data_y[i]-data_y_mean),data_y_std)
         
         # normalized_x_sample = all_data_x[i]/norm_factor_x
         # normalized_y_sample = all_data_y[i]/norm_factor_y
