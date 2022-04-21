@@ -39,7 +39,7 @@ def create_pose_detector():
     skip_2 = Add()([skip_1,x2])
 
     #output 
-    output = Dense(52*6)(skip_2)
+    output = Dense(52*3)(skip_2)
 
     output = Reshape((52,3))(output)
 
