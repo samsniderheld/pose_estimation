@@ -41,7 +41,7 @@ def create_pose_detector():
     #output 
     output = Dense(52*6)(skip_2)
 
-    output = Reshape((52,6))(output)
+    output = Reshape((52,3))(output)
 
 
     # instantiate the pose detector model

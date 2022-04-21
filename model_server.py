@@ -54,7 +54,7 @@ def suggest():
 
     # prediction = np.multiply((prediction + stats['y_mean']),stats['y_std'])
 
-    response = {"bones": prediction[0].flatten().tolist()}
+    response = {"bones": prediction[0].numpy().flatten().tolist()}
 
     return json.dumps(response)
 

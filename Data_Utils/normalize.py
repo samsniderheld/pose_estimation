@@ -47,12 +47,12 @@ def normalize_data(args):
 
     for i, path in tqdm(enumerate(output_paths)):
 
-        Y = np.empty((52,6),dtype=np.float64)
+        Y = np.empty((52,3),dtype=np.float64)
 
         with open(path) as file:
             csv_reader = csv.reader(file, delimiter=',')
             for j,row in enumerate(csv_reader):
-                for l, val_y in enumerate(row[1:-1]):
+                for l, val_y in enumerate(row[4:-1]):
                   Y[j,l] = float(val_y)
 
         all_data_y.append(Y)
