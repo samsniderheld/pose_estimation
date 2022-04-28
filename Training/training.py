@@ -1,5 +1,6 @@
 import os
 from Model.pose_detection_model import create_pose_detector
+from Model.img_2_bone import create_img_2_bone
 from Utils.reporting import *
 from Data_Utils.generate_samples import *
 from Data_Utils.data_generator import DataGenerator, ImageDataGenerator

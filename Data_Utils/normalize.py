@@ -113,7 +113,6 @@ def normalize_image_data(args):
         X = cv2.imread(path)
         X = cv2.cvtColor(X, cv2.COLOR_RGB2GRAY)
         X = np.expand_dims(X,2)
-        X = X/255
 
         all_data_x.append(X)
 
@@ -124,13 +123,12 @@ def normalize_image_data(args):
         with open(path) as file:
             csv_reader = csv.reader(file, delimiter=',')
             for j,row in enumerate(csv_reader):
-                for l, val_y in enumerate(row[4:-1]):
+                for l, val_y in enumerate(row[4:]):
                   Y[j,l] = float(val_y)
 
         all_data_y.append(Y)
 
 
-    print("calculating mean and std")
     np_all_data_x = np.array(all_data_x,dtype=np.float64)
     np_all_data_y = np.array(all_data_y,dtype=np.float64)
 
@@ -138,23 +136,16 @@ def normalize_image_data(args):
     print(np_all_data_y.shape)
 
 
-
-    data_y_mean = np.mean(np_all_data_y,dtype=np.float64)
-    data_y_std = np.std(np_all_data_y,dtype=np.float64)
-
-
     print("normalizing and saving data")
     for i in tqdm(range(0,np_all_data_x.shape[0])):
 
-        normalized_x_sample = np_all_data_x[i]/1024
+        normalized_x_sample = np_all_data_x[i]/255
         normalized_y_sample = np_all_data_y[i]/360
 
 
         np.save(os.path.join(output_path_x,f"{i:04d}_x_data"), normalized_x_sample)
         np.save(os.path.join(output_path_y,f"{i:04d}_y_data"), normalized_y_sample)
 
-    np.savetxt("x.csv", normalized_x_sample, delimiter=",")
-    np.savetxt("y.csv", normalized_y_sample, delimiter=",")
 
 
 
