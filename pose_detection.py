@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('--continue_training', action='store_true')
     parser.add_argument('--notes', type=str, default="N/A", help='A description of the experiment')
     parser.add_argument('--experiment_name', type=str, default="", help='A name for the experiment')
-
+    parser.add_argument('--img_2_bone', action='store_true')
     return parser.parse_args()
 
 
@@ -48,9 +48,12 @@ def main():
         os.makedirs(os.path.join(args.base_results_dir,"Saved_Models"))
 
 
-    normalize_data(args)
-
-    train(args)
+    if(args.img_2_bone):
+        normalize_img_data(args)
+        train_img_2_bone(args)
+    else:
+        normalize_data(args)
+        train(args)
         
 
     print("done training")
