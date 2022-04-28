@@ -98,7 +98,7 @@ def normalize_image_data(args):
 
 
 
-    input_data_path = os.path.join(args.base_data_dir,args.input_data_dir + "*")
+    input_data_path = os.path.join(args.base_data_dir,args.input_img_data_dir + "*")
     input_paths = sorted(glob.glob(input_data_path), key=natural_keys)
 
     output_data_path = os.path.join(args.base_data_dir,args.output_data_dir + "*")

@@ -13,6 +13,7 @@ def parse_args():
 
     parser.add_argument('--base_data_dir', type=str, default="Data/", help='The directory that holds the image data')
     parser.add_argument('--input_data_dir', type=str, default="CSV_X/", help='The directory for CSV input data')
+    parser.add_argument('--input_img_data_dir', type=str, default="Image_X/", help='The directory for CSV input data')
     parser.add_argument('--output_data_dir', type=str, default="CSV_Y/", help='The directory for CSV input data')
     parser.add_argument('--base_results_dir', type=str, default="/", help='The base directory to hold the results')
     parser.add_argument('--output_test_csv_dir', type=str, default="CSV/", help='The directory for result csvs')
