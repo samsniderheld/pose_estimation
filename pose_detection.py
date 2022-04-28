@@ -1,8 +1,8 @@
 import argparse
 import os
 import shutil
-from Training.training import train
-from Data_Utils.normalize import normalize_data
+from Training.training import train, train_img_2_bone
+from Data_Utils.normalize import normalize_data, normalize_image_data
 from datetime import datetime
 
 
@@ -50,7 +50,7 @@ def main():
 
 
     if(args.img_2_bone):
-        normalize_img_data(args)
+        normalize_image_data(args)
         train_img_2_bone(args)
     else:
         normalize_data(args)

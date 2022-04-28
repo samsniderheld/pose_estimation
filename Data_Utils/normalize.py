@@ -112,6 +112,7 @@ def normalize_image_data(args):
 
         X = cv2.imread(path)
         X = cv2.cvtColor(X, cv2.COLOR_RGB2GRAY)
+        X = np.expand_dims(X,2)
         X = X/255
 
         all_data_x.append(X)
