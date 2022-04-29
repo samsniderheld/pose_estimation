@@ -1,4 +1,4 @@
-from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, Conv2DTranspose, Reshape, Flatten, BatchNormalization, Lambda, Add, ReLU, Dropout
+from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, Conv2DTranspose, Reshape, Flatten, BatchNormalization, Lambda, Add, ReLU, Dropout, Multiply
 from tensorflow.keras.models import Model
 from tensorflow.keras import backend as K
 from tensorflow.keras.losses import MeanSquaredError
@@ -14,6 +14,8 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
 
     #image encoder input
     image_encoder_input = Input(shape=input_shape)
+    #bone encoder input
+    bone_encoder_input = Input(shape=(52,3))
 
     #bone encoder input
 
@@ -100,10 +102,18 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     model.summary()
 
     #define losses    
-
     opt = Adam(learning_rate=0.0005)
 
-    model.compile(optimizer=opt,loss=MeanSquaredError())
+    weighted_matrix = tf.linespace(1.0,.1,52)
+
+    weighted_output = Multiply()([weighted_matrix,output])
+
+    bone_reconstruction_loss = mse(K.flatten(bone_encoder_input), K.flatten(weighted_output))
+    
+    model.add_loss(bone_reconstruction_loss)
+
+    # model.compile(optimizer=opt,loss=MeanSquaredError())
+    model.compile(optimizer=opt)
 
     return model
 

@@ -52,7 +52,7 @@ def get_random_img_sample(args):
 
 
 
-    return X, Y
+    return ([X,Y], Y)
 
 
 

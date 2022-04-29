@@ -117,4 +117,6 @@ class ImageDataGenerator(tf.keras.utils.Sequence):
             Y[i] = np.load(batch_file[1])
 
             
-        return X,Y
+        # return X,Y
+        return ([X, Y], Y)
+
