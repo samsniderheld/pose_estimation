@@ -81,6 +81,7 @@ class ImageDataGenerator(tf.keras.utils.Sequence):
         self.input_files  = sorted(glob.glob(self.input_dir))
         self.output_dir  = sorted(glob.glob(self.output_dir))
         self.all_files = list(zip(self.input_files,self.output_dir))
+        self.weight_matrix = tf.linspace([1.0,1.0,1.0],[.1,.1,.1],52)
         self.on_epoch_end()
         self.count = self.__len__()
         print("number of all samples = ", len(self.input_files))
@@ -115,7 +116,7 @@ class ImageDataGenerator(tf.keras.utils.Sequence):
 
             X[i] = np.load(batch_file[0])
             Y[i] = np.load(batch_file[1])
-            Y_Weight[i] = tf.linspace([1.0,1.0,1.0],[.1,.1,.1],52)
+            Y_Weight[i] = self.weight_matrix
 
             
         # return X,Y
