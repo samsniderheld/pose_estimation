@@ -3,6 +3,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras import backend as K
 from tensorflow.keras.losses import MeanSquaredError
 from tensorflow.keras.optimizers import Adam
+from tensorflow.math import multiply
 
 def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     #define model
@@ -14,8 +15,10 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
 
     #image encoder input
     image_encoder_input = Input(shape=input_shape)
+
+    bone_input = Input(shape=(52,3))
     #bone encoder input
-    bone_encoder_input = Input(shape=(52,3))
+    bone_weight_input = Input(shape=(52,3))
 
     #bone encoder input
 
@@ -104,11 +107,11 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     #define losses    
     opt = Adam(learning_rate=0.0005)
 
-    weighted_matrix = tf.linespace(1.0,.1,52)
 
-    weighted_output = Multiply()([weighted_matrix,output])
 
-    bone_reconstruction_loss = mse(K.flatten(bone_encoder_input), K.flatten(weighted_output))
+    weighted_input = multiply(bone_input,bone_weight_input)
+
+    bone_reconstruction_loss = mse(K.flatten(weighted_input), K.flatten(output))
     
     model.add_loss(bone_reconstruction_loss)
 
