@@ -45,14 +45,17 @@ def get_random_img_sample(args):
 
     X = np.empty((1, 128,128,1))
     Y = np.empty((1, 52,3))
+    Y_Weight = np.empty((1,52,3))
 
     X[0] = np.load(input_paths[rand_idx])
     Y[0] = np.load(output_paths[rand_idx])
+    Y_Weight[0] = tf.linspace([1.0,1.0,1.0],[.1,.1,.1],52)
 
 
 
 
-    return ([X,Y], Y)
+
+    return ([X,Y,Y_Weight], Y)
 
 
 

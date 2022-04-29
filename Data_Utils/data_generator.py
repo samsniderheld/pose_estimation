@@ -115,7 +115,7 @@ class ImageDataGenerator(tf.keras.utils.Sequence):
 
             X[i] = np.load(batch_file[0])
             Y[i] = np.load(batch_file[1])
-            Y_Weight[i] = linspace([1.0,1.0,1.0],[.1,.1,.1],52)
+            Y_Weight[i] = tf.linspace([1.0,1.0,1.0],[.1,.1,.1],52)
 
             
         # return X,Y

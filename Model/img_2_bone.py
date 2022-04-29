@@ -1,7 +1,7 @@
 from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, Conv2DTranspose, Reshape, Flatten, BatchNormalization, Lambda, Add, ReLU, Dropout, Multiply
 from tensorflow.keras.models import Model
 from tensorflow.keras import backend as K
-from tensorflow.keras.losses import MeanSquaredError
+from tensorflow.keras.losses import MeanSquaredError, mse
 from tensorflow.keras.optimizers import Adam
 from tensorflow.math import multiply
 
@@ -100,7 +100,7 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     output = Reshape((52,3))(output)
 
     # instantiate bone decoder model
-    model = Model(image_encoder_input, output, name='model')
+    model = Model([image_encoder_input, bone_input, bone_weight_input], output, name='model')
 
     model.summary()
 
