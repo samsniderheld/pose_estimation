@@ -105,13 +105,13 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     model.summary()
 
     #define losses    
-    opt = Adam(learning_rate=0.0005)
+    # opt = Adam(learning_rate=0.0005)
 
     error = (K.flatten(bone_input) - K.flatten(output))
 
     error_squared = square(error)
 
-    weighted_error_squared = multiply(error_squared, k.flatten(bone_weight_input))
+    weighted_error_squared = multiply(error_squared, K.flatten(bone_weight_input))
 
     reduced_weighted_error = reduce_mean(weighted_error_squared)
 
@@ -122,7 +122,7 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     model.add_loss(reduced_weighted_error)
 
     # model.compile(optimizer=opt,loss=MeanSquaredError())
-    model.compile(optimizer=opt)
+    model.compile(optimizer='adam')
 
     return model
 

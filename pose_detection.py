@@ -32,6 +32,8 @@ def parse_args():
     parser.add_argument('--notes', type=str, default="N/A", help='A description of the experiment')
     parser.add_argument('--experiment_name', type=str, default="", help='A name for the experiment')
     parser.add_argument('--img_2_bone', action='store_true')
+    parser.add_argument('--weight_max', type=float, default=1, help='That max weighted loss value')
+    parser.add_argument('--weight_min', type=float, default=.1, help='The min weighted loss value')
     return parser.parse_args()
 
 
