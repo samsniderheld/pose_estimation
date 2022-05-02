@@ -43,7 +43,7 @@ def get_random_img_sample(args):
 
     output_paths = sorted(glob.glob(output_data_path),key=natural_keys)
 
-    X = np.empty((1, 128,128,1))
+    X = np.empty((1, 128,128,3))
     Y = np.empty((1, 52,3))
     Y_Weight = np.empty((1,52,3))
 

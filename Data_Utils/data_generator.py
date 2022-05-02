@@ -109,7 +109,7 @@ class ImageDataGenerator(tf.keras.utils.Sequence):
 
         batch_files = self.all_files[idx*self.batch_size:idx*self.batch_size+self.batch_size]
         
-        X = np.empty((self.batch_size,128,128,1))
+        X = np.empty((self.batch_size,128,128,3))
         Y = np.empty((self.batch_size,52,3))
         Y_Weight = np.empty((self.batch_size,52,3))
         # read image

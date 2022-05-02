@@ -1,9 +1,11 @@
 from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, Conv2DTranspose, Reshape, Flatten, BatchNormalization, Lambda, Add, ReLU, Dropout, Multiply
 from tensorflow.keras.models import Model
+from tensorflow.keras.activations import softmax
 from tensorflow.keras import backend as K
 from tensorflow.keras.losses import MeanSquaredError, mse
 from tensorflow.keras.optimizers import Adam
 from tensorflow.math import multiply, reduce_mean, square
+
 
 def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     #define model
@@ -11,7 +13,7 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
 
     original_dims = dims * dims
 
-    input_shape = (dims,dims,1)
+    input_shape = (dims,dims,3)
 
     #image encoder input
     image_encoder_input = Input(shape=input_shape)
@@ -111,7 +113,9 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
 
     error_squared = square(error)
 
-    weighted_error_squared = multiply(error_squared, K.flatten(bone_weight_input))
+    bone_weights = softmax(bone_weight_input)
+
+    weighted_error_squared = multiply(error_squared, K.flatten(bone_weights))
 
     reduced_weighted_error = reduce_mean(weighted_error_squared)
 
