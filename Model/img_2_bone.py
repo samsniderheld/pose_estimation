@@ -113,9 +113,7 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
 
     error_squared = square(error)
 
-    bone_weights = softmax(bone_weight_input)
-
-    weighted_error_squared = multiply(error_squared, K.flatten(bone_weights))
+    weighted_error_squared = multiply(error_squared, K.flatten(bone_weight_input))
 
     reduced_weighted_error = reduce_mean(weighted_error_squared)
 
