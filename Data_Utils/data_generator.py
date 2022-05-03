@@ -81,7 +81,7 @@ class ImageDataGenerator(tf.keras.utils.Sequence):
         self.input_files  = sorted(glob.glob(self.input_dir))
         self.output_dir  = sorted(glob.glob(self.output_dir))
         self.all_files = list(zip(self.input_files,self.output_dir))
-        self.weight_matrix = self.__create_weight_matrix__(args)
+        self.weight_matrix = self.__load_weights__(args)
         self.on_epoch_end()
         self.count = self.__len__()
         print("number of all samples = ", len(self.input_files))
@@ -98,16 +98,17 @@ class ImageDataGenerator(tf.keras.utils.Sequence):
 
         return X,Y
 
-    def __softmax__(self,x):
-    
-        f_x = np.exp(x) / np.sum(np.exp(x))
-        return f_x
+    def __load_weights__(self,args):
+        weight_path = os.path.join(args.base_data_dir,"weights.csv")
+        Y = np.empty((52,3),dtype=np.float64)
 
-    def __create_weight_matrix__(args)(self,args):
-        matrix = tf.linspace([args.weight_max,args.weight_max,args.weight_max],
-            [args.weight_min,args.weight_min,args.weight_min],52)
-        softmax = self.__softmax__(matrix)
-        return softmax
+        with open(weight_path) as file:
+            csv_reader = csv.reader(file, delimiter=',')
+            for j,row in enumerate(csv_reader):
+                for l, val_y in enumerate(row[1:]):
+                  Y[j,l] = float(val_y)
+
+        return Y
 
     def on_epoch_end(self):
         if self.shuffle == True:
