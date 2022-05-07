@@ -9,7 +9,7 @@ from Data_Utils.data_generator import DataGenerator, ImageDataGenerator
 def train(args):
 
     #setup data
-    random_sample = get_random_sample()
+    random_sample = get_random_sample(args)
 
     data_generator = DataGenerator(args,shuffle=True)
 
@@ -66,7 +66,7 @@ def train(args):
 def train_img_2_bone(args):
 
     #setup data
-    random_sample = get_random_img_sample(args)
+    random_sample = get_random_img_sample()
 
     base_bone_path = os.path.join(args.base_data_dir, "bone_connections.csv")
 
