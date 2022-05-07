@@ -121,7 +121,7 @@ def normalize_image_data(args):
         with open(path) as file:
             csv_reader = csv.reader(file, delimiter=',')
             for j,row in enumerate(csv_reader):
-                for l, val_y in enumerate(row[1:3]):
+                for l, val_y in enumerate(row[1:4]):
                   Y[j,l] = float(val_y)
 
         all_data_y.append(Y)
@@ -138,7 +138,7 @@ def normalize_image_data(args):
     for i in tqdm(range(0,np_all_data_x.shape[0])):
 
         normalized_x_sample = np_all_data_x[i]/255
-        normalized_y_sample = np_all_data_y[i]/360
+        normalized_y_sample = np_all_data_y[i]
 
 
         np.save(os.path.join(output_path_x,f"{i:04d}_x_data"), normalized_x_sample)
