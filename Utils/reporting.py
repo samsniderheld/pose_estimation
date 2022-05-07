@@ -55,7 +55,7 @@ def load_base_bones(path):
       csv_reader = csv.reader(file, delimiter=',')
       for j,row in enumerate(csv_reader):
           for l, connection in enumerate(row[0:2]):
-            bone_idxs[j,l] = float(connection)
+            base_bones[j,l] = float(connection)
 
   return base_bones
 
@@ -70,14 +70,14 @@ def plot_skeletons(model, base_bones, test_input, path, epoch):
   
   ax_g = fig.add_subplot(1, 2, 1, projection='3d')
   for i, connections in enumerate(base_bones, start = 0):
-    bone = [test_input[1][idx] for idx in connections]
+    bone = [test_input[1][0][idx] for idx in connections]
     bone = np.array(bone)
     x,y,z = np.split(bone.T,3)
     ax_g.plot(x[0],z[0],y[0])
 
   ax_p = fig.add_subplot(1, 2, 2, projection='3d')
   for i, connections in enumerate(base_bones, start = 0):
-    bone = [prediction[idx] for idx in connections]
+    bone = [prediction[0][idx] for idx in connections]
     bone = np.array(bone)
     x,y,z = np.split(bone.T,3)
     ax_p.plot(x[0],z[0],y[0])
