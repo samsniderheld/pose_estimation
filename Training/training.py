@@ -9,7 +9,7 @@ from Data_Utils.data_generator import DataGenerator, ImageDataGenerator
 def train(args):
 
     #setup data
-    random_sample = get_random_sample(args)
+    random_sample = get_random_sample()
 
     data_generator = DataGenerator(args,shuffle=True)
 
@@ -39,7 +39,6 @@ def train(args):
             if(loss < lowest_loss):
                 generate_bone_accuracy_table(pose_detector,random_sample, 
                     output_test_csv_dir, i, args.print_csv)
-
 
 
                 pose_detector_save_path = os.path.join(model_save_path,"pose_detector_model.h5")
@@ -81,6 +80,7 @@ def train_img_2_bone(args):
     lowest_loss = 10000
 
     output_test_csv_dir = os.path.join(args.base_results_dir,args.output_test_csv_dir)
+    output_test_graph_dir = os.path.join(args.base_results_dir,args.output_test_graph_dir)
     model_save_path = os.path.join(args.base_results_dir, args.saved_model_dir)
     output_history_path = os.path.join(args.base_results_dir,args.history_dir)
 
@@ -102,8 +102,8 @@ def train_img_2_bone(args):
                 generate_bone_accuracy_table(pose_detector,random_sample, 
                     output_test_csv_dir, i, args.print_csv)
 
-                plot_skeletons(pose_detector,base_bones, random_sample, 
-                    output_test_csv_dir, i)
+                plot_skeletons(pose_detector,base_bones, 
+                    output_test_graph_dir, i, 5)
 
                 pose_detector_save_path = os.path.join(model_save_path,"pose_detector_model.h5")
                 pose_detector.save_weights(pose_detector_save_path)

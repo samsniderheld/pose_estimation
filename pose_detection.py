@@ -17,6 +17,7 @@ def parse_args():
     parser.add_argument('--output_data_dir', type=str, default="CSV_Y/", help='The directory for CSV input data')
     parser.add_argument('--base_results_dir', type=str, default="/", help='The base directory to hold the results')
     parser.add_argument('--output_test_csv_dir', type=str, default="CSV/", help='The directory for result csvs')
+    parser.add_argument('--output_test_graph_dir', type=str, default="Graph/", help='The directory for result csvs')
     parser.add_argument('--saved_model_dir', type=str, default="Saved_Models/", help='The directory for input data')
     parser.add_argument('--history_dir', type=str, default="History/", help='The directory for input data')
     parser.add_argument('--num_epochs', type=int, default=100, help='The number of epochs')
@@ -47,6 +48,7 @@ def main():
     if(not os.path.exists(args.base_results_dir)):
         os.makedirs(args.base_results_dir)
         os.makedirs(os.path.join(args.base_results_dir,"CSV"))
+        os.makedirs(os.path.join(args.base_results_dir,"Graph"))
         os.makedirs(os.path.join(args.base_results_dir,"History"))
         os.makedirs(os.path.join(args.base_results_dir,"Saved_Models"))
 

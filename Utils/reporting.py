@@ -7,6 +7,7 @@ import json
 from datetime import datetime
 from tabulate import tabulate
 import matplotlib.pyplot as plt
+from Data_Utils.generate_samples import *
 
 def generate_bone_accuracy_table(model, test_input, path, epoch, print_to_terminal):
 
@@ -60,33 +61,36 @@ def load_base_bones(path):
   return base_bones
 
 
-def plot_skeletons(model, base_bones, test_input, path, epoch):
+def plot_skeletons(model, base_bones, path, epoch, num):
 
-  output = model(test_input[0])
+  for i in range(0,num):
 
-  prediction = output.numpy()
+    X,Y = get_random_img_sample()
 
-  fig = plt.figure()
-  
-  ax_g = fig.add_subplot(1, 2, 1, projection='3d')
-  for i, connections in enumerate(base_bones, start = 0):
-    bone = [test_input[1][0][idx] for idx in connections]
-    bone = np.array(bone)
-    x,y,z = np.split(bone.T,3)
-    ax_g.plot(x[0],z[0],y[0])
+    output = model(X[0])
 
-  ax_p = fig.add_subplot(1, 2, 2, projection='3d')
-  for i, connections in enumerate(base_bones, start = 0):
-    bone = [prediction[0][idx] for idx in connections]
-    bone = np.array(bone)
-    x,y,z = np.split(bone.T,3)
-    ax_p.plot(x[0],z[0],y[0])
+    prediction = output.numpy()
 
-  output_path = os.path.join(path,f"epoch_{epoch:04d}_skeleton.jpg")
+    fig = plt.figure()
+    
+    ax_g = fig.add_subplot(1, 2, 1, projection='3d')
+    for connections in enumerate(base_bones, start = 0):
+      bone = [Y[0][idx] for idx in connections]
+      bone = np.array(bone)
+      x,y,z = np.split(bone.T,3)
+      ax_g.plot(x[0],z[0],y[0])
 
-  plt.savefig(output_path)
+    ax_p = fig.add_subplot(1, 2, 2, projection='3d')
+    for connections in enumerate(base_bones, start = 0):
+      bone = [prediction[0][idx] for idx in connections]
+      bone = np.array(bone)
+      x,y,z = np.split(bone.T,3)
+      ax_p.plot(x[0],z[0],y[0])
 
-  plt.show()
+    output_path = os.path.join(path,f"epoch_{epoch:04d}_skeleton_{i:04d}.jpg")
+
+    plt.savefig(output_path)
+
 
 
 
