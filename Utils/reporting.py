@@ -67,7 +67,7 @@ def plot_skeletons(model, base_bones, path, epoch, num):
 
     X,Y = get_random_img_sample()
 
-    output = model(X[0])
+    output = model(X)
 
     prediction = output.numpy()
 
@@ -75,7 +75,7 @@ def plot_skeletons(model, base_bones, path, epoch, num):
     
     ax_g = fig.add_subplot(1, 2, 1, projection='3d')
     for connections in enumerate(base_bones, start = 0):
-      bone = [Y[0][idx] for idx in connections]
+      bone = [Y[idx] for idx in connections]
       bone = np.array(bone)
       x,y,z = np.split(bone.T,3)
       ax_g.plot(x[0],z[0],y[0])
