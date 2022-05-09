@@ -107,10 +107,14 @@ def normalize_image_data(args):
     all_data_x = []
     all_data_y = []
 
+    blur_size = (5, 5)
+
     print("loading data")
     for i, path in tqdm(enumerate(input_paths)):
 
         X = cv2.imread(path)
+
+        X = cv2.blur(X, blur_size)
 
         all_data_x.append(X)
 

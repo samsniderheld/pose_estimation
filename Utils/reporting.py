@@ -74,15 +74,19 @@ def plot_skeletons(model, base_bones, path, epoch, num):
 
 
     fig = plt.figure()
+
+    ax_img = fig.add_subplot(1,3,1)
+    plt.imshow(X[0])
+
     
-    ax_g = fig.add_subplot(1, 2, 1, projection='3d')
+    ax_g = fig.add_subplot(1, 3, 2, projection='3d')
     for connections in enumerate(base_bones):
       bone = [Y[0][idx] for idx in connections[1]]
       bone = np.array(bone)
       x,y,z = np.split(bone.T,3)
       ax_g.plot(x[0],z[0],y[0])
 
-    ax_p = fig.add_subplot(1, 2, 2, projection='3d')
+    ax_p = fig.add_subplot(1, 3, 3, projection='3d')
     for connections in enumerate(base_bones):
       bone = [prediction[0][idx] for idx in connections[1]]
       bone = np.array(bone)
@@ -92,6 +96,7 @@ def plot_skeletons(model, base_bones, path, epoch, num):
     output_path = os.path.join(path,f"epoch_{epoch:04d}_skeleton_{i:04d}.jpg")
 
     plt.savefig(output_path)
+    plt.close()
 
 
 
