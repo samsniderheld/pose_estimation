@@ -25,6 +25,7 @@ def parse_args():
     parser.add_argument('--csv_dims', type=int, default=156, help='The number of csv channels')
     parser.add_argument('--input_channels', type=int, default=2, help='The number of input bone dims')
     parser.add_argument('--output_channels', type=int, default=2, help='The number of input bone dims')
+    parser.add_argument('--latent_dim', type=int, default=64, help='the size of the latent dim')
     parser.add_argument('--print_freq', type=int, default=5, help='How often is the status printed')
     parser.add_argument('--save_freq', type=int, default=10, help='How often is the model saved')
     parser.add_argument('--save_best_only', action='store_true')
@@ -33,8 +34,7 @@ def parse_args():
     parser.add_argument('--notes', type=str, default="N/A", help='A description of the experiment')
     parser.add_argument('--experiment_name', type=str, default="", help='A name for the experiment')
     parser.add_argument('--img_2_bone', action='store_true')
-    parser.add_argument('--weight_max', type=float, default=1, help='That max weighted loss value')
-    parser.add_argument('--weight_min', type=float, default=.1, help='The min weighted loss value')
+    
     return parser.parse_args()
 
 
