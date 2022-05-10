@@ -70,7 +70,7 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     x6 = BatchNormalization()(bottle_neck)
     x6 = ReLU()(x6)
     x6 = Dropout(.5)(x6)
-    x6 = Dense(64)(x6)
+    x6 = Dense(latent_size)(x6)
     x6 = BatchNormalization()(x6)
     x6 = ReLU()(x6)
     x6 = Dropout(.5)(x6)
@@ -79,11 +79,11 @@ def create_img_2_bone(latent_dim = 64, dims = 128, kernal_size = 3):
     skip_1 = Add()([bottle_neck,x6])
 
     # block 3
-    x7 = Dense(64)(skip_1)
+    x7 = Dense(latent_size)(skip_1)
     x7 = BatchNormalization()(x7)
     x7 = ReLU()(x7)
     x7 = Dropout(.5)(x7)
-    x7 = Dense(64)(x7)
+    x7 = Dense(latent_size)(x7)
     x7 = BatchNormalization()(x7)
     x7 = ReLU()(x7)
     x7 = Dropout(.5)(x7)
