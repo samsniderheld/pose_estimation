@@ -31,6 +31,7 @@ def parse_args():
     parser.add_argument('--save_best_only', action='store_true')
     parser.add_argument('--print_csv', action='store_true')
     parser.add_argument('--continue_training', action='store_true')
+    parser.add_argument('--saved_weights_path', type=str, default="N/A", help='the path of the saved weights')
     parser.add_argument('--notes', type=str, default="N/A", help='A description of the experiment')
     parser.add_argument('--experiment_name', type=str, default="", help='A name for the experiment')
     parser.add_argument('--img_2_bone', action='store_true')

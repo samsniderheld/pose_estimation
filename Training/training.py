@@ -76,6 +76,9 @@ def train_img_2_bone(args):
 
     pose_detector = create_img_2_bone(latent_dim=args.latent_dim)
 
+    if(args.continue_training):
+        pose_detector.load_weights(args.saved_weights_path)
+
     all_history = []
     lowest_loss = 10000
 
